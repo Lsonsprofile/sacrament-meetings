@@ -42,7 +42,7 @@ export default function Header() {
         {/* THIS IS THE ONLY CHANGE: Wrapping NavLinks in Suspense */}
         <nav className="mt-6 border-t border-blue-800/50 pt-3">
           <Suspense fallback={<div className="h-6"></div>}>
-            <NavLinks />
+            <NavLinks isHeader={true} />
           </Suspense>
         </nav>
       </div>
