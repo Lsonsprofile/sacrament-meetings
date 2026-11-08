@@ -2,11 +2,19 @@
 
 import { Church } from 'lucide-react';
 import NavLinks from './NavLinks';
+import { useState, useEffect } from 'react';
 
 export default function Header() {
-  const today = new Date().toLocaleDateString('en-US', { 
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-  });
+  // Start with an empty string so the server doesn't complain
+  const [today, setToday] = useState('');
+
+  // Calculate the date only after the component mounts in the browser
+  useEffect(() => {
+    const dateString = new Date().toLocaleDateString('en-US', { 
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+    });
+    setToday(dateString);
+  }, []);
 
   return (
     <header className="bg-[#1e3a5f] text-white shadow-md">
@@ -22,10 +30,16 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Date */}
+          {/* Date - Only renders if today is not empty */}
           <div className="text-right text-sm">
-            <p className="text-blue-200">{today.split(',')[0]}</p>
-            <p className="font-semibold">{today.split(',')[1]}</p>
+            {today ? (
+              <>
+                <p className="text-blue-200">{today.split(',')[0]}</p>
+                <p className="font-semibold">{today.split(',')[1]}</p>
+              </>
+            ) : (
+              <p className="text-blue-200">Loading date...</p>
+            )}
           </div>
         </div>
 
