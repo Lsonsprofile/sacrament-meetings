@@ -1,8 +1,11 @@
 import { redirect } from 'next/navigation';
+import { connection } from 'next/server';
 import { getMeetings } from '@/lib/meetings-db';
-export const dynamic = 'force-dynamic'; // This is needed to force Next.js to render this page server-side
 
-export default function CurrentMeeting() {
+export default async function CurrentMeeting() {
+  // This tells Next.js to wait until a user requests the page
+  await connection();
+
   // 1. Get today's date
   const today = new Date();
   
